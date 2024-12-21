@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHashHistory } from "vue-router";
 
 const routes = [
   {
@@ -10,16 +10,11 @@ const routes = [
     path: "/LEDGER",
     name: "LEDGER",
     component: () => import("../view/LEDGER.vue"),
-  },
-  {
-    path: "/SHIPPING",
-    name: "SHIPPING",
-    component: () => import("../view/SHIPPING.vue"),
-  },
+  }
 ];
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHashHistory(),
   routes,
 });
 

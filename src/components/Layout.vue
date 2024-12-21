@@ -13,7 +13,6 @@
         bottom: 0,
       }"
     >
-      <div class="logo" />
       <a-menu v-model:selectedKeys="selectedKeys" theme="dark" mode="inline">
         <a-menu-item key="1" @click="() => $router.push('/总账')">
           <user-outlined />
