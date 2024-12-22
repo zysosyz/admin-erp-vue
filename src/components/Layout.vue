@@ -14,17 +14,13 @@
       }"
     >
       <a-menu v-model:selectedKeys="selectedKeys" theme="dark" mode="inline">
-        <a-menu-item key="1" @click="() => $router.push('/总账')">
+        <a-menu-item key="1" @click="() => $router.push('/LEDGER')">
           <user-outlined />
-          <span>总帐</span>
+          <span>LEDGER</span>
         </a-menu-item>
-        <a-menu-item key="2">
+        <a-menu-item key="2" @click="() => $router.push('/SHIPPING')">
           <video-camera-outlined />
-          <span>nav 2</span>
-        </a-menu-item>
-        <a-menu-item key="3">
-          <upload-outlined />
-          <span>nav 3</span>
+          <span>SHIPPING</span>
         </a-menu-item>
       </a-menu>
     </a-layout-sider>
@@ -50,7 +46,9 @@
           minHeight: '280px',
         }"
       >
-      <router-view></router-view>
+      <a-config-provider :locale="zhCN">
+        <router-view></router-view>
+      </a-config-provider>
       </a-layout-content>
     </a-layout>
   </a-layout>
@@ -60,10 +58,13 @@ import { ref } from "vue";
 import {
   UserOutlined,
   VideoCameraOutlined,
-  UploadOutlined,
   MenuUnfoldOutlined,
   MenuFoldOutlined,
 } from "@ant-design/icons-vue";
+import zhCN from 'ant-design-vue/es/locale/zh_CN';
+import dayjs from 'dayjs';
+import 'dayjs/locale/zh-cn';
+dayjs.locale('zh-cn');
 const selectedKeys = ref<string[]>(["1"]);
 const collapsed = ref<boolean>(false);
 </script>

@@ -21,7 +21,6 @@ interface TableItem {
   name: string;
   key?: number;
 }
-
 const columns = [
   {
     title: "id",
