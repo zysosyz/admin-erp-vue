@@ -1,22 +1,58 @@
-import axios from "axios";
-axios.defaults.baseURL = "/api/amazon-manage/";
-axios.defaults.timeout = 6000;
-axios.interceptors.request.use((config) => {
-  // config.headers["authori-zation"] = localStorage.getItem("token");
+import axios, { AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from "axios";
+
+// 基础配置
+const BASE_URL = "/api/amazon-manage/";
+const TIMEOUT = 6000;
+
+// 创建axios实例
+const instance = axios.create({
+  baseURL: BASE_URL,
+  timeout: TIMEOUT
+});
+
+// 请求拦截器
+instance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
+  // const token = localStorage.getItem("token");
+  // if (token) {
+  //   config.headers["Authorization"] = token;
+  // }
   return config;
+}, error => {
+  return Promise.reject(error);
 });
-axios.interceptors.response.use((res) => {
-  return res.data;
+
+// 响应拦截器
+instance.interceptors.response.use((response: AxiosResponse) => {
+  return response.data;
+}, error => {
+  return Promise.reject(error);
 });
-function http(url: string, method = "get", data: any, headers = "application/json") {
-  return axios({
+
+// 请求方法类型
+type RequestMethod = 'get' | 'post' | 'put' | 'delete';
+
+// HTTP请求函数
+function http(
+  url: string, 
+  method: RequestMethod = 'get',
+  data?: any,
+  contentType: string = 'application/json'
+) {
+  const config: AxiosRequestConfig = {
     url,
     method,
-    data: method !== "get" ? data : null,
-    params: method === "get" ? data : null,
     headers: {
-      "Content-Type": headers,
-    },
-  });
+      'Content-Type': contentType
+    }
+  };
+
+  if (method.toLowerCase() === 'get') {
+    config.params = data;
+  } else {
+    config.data = data;
+  }
+
+  return instance(config);
 }
+
 export default http;
